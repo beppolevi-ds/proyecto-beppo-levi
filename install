@@ -11,11 +11,11 @@ install_server() {
   echo "Instalando servidor base"
   # linkear las variables de entorno globales
   if [[ ! -d "$DNSMASQ_DIR/.env" ]]; then
-    ln -s "$CURRENT_DIR/.global.env" "$DNSMASQ_DIR/.env" &>/dev/null
+    ln -s "$CURRENT_DIR/.global.env" "$DNSMASQ_DIR/.env"
   fi
 
   if [[ ! -d "$TRAEFIK_DIR/.env" ]]; then
-    ln -s "$CURRENT_DIR/.global.env" "$TRAEFIK_DIR/.env" &>/dev/null
+    ln -s "$CURRENT_DIR/.global.env" "$TRAEFIK_DIR/.env"
   fi
 
   # generar nuevos certificados tls
@@ -27,7 +27,7 @@ install_server() {
     echo "Generando certificados SSL..."
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
       -keyout "$TRAEFIK_DIR/certs/local.key" -out "$TRAEFIK_DIR/certs/local.crt" \
-      -subj "/CN=*.$HOST" &>/dev/null
+      -subj "/CN=*.$HOST"
   fi
 }
 
@@ -35,7 +35,7 @@ install_plataforma() {
   echo "Instalando plataforma Moodle"
 
   if [[ ! -d "$PLATAFORMA_DIR/.env" ]]; then
-    ln -s "$CURRENT_DIR/.global.env" "$PLATAFORMA_DIR/.env" &>/dev/null
+    ln -s "$CURRENT_DIR/.global.env" "$PLATAFORMA_DIR/.env"
   fi
 
   if [[ ! -d "$PLATAFORMA_DIR/moodledata" ]]; then
@@ -48,7 +48,7 @@ install_plataforma() {
   fi
 
   echo "Creando imagen de mooodle"
-  docker compose --project-directory "$PLATAFORMA_DIR" build &>/dev/null
+  docker compose --project-directory "$PLATAFORMA_DIR" build
 }
 
 main() {
