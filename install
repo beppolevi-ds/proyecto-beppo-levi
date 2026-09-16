@@ -48,7 +48,7 @@ install_plataforma() {
   fi
 
   echo "Creando imagen de mooodle"
-  docker compose --project-directory "$PLATAFORMA_DIR/plataforma-instituto" build &>/dev/null
+  docker compose --project-directory "$PLATAFORMA_DIR" build &>/dev/null
 }
 
 main() {
@@ -67,6 +67,14 @@ main() {
 
   install_server
   install_plataforma
+
+  # iniciar automaticamente los servicios
+  if [[ "$1" == "--start-now" ]]; then
+    echo "Iniciando servicios"
+    docker compose --project-directory "$DNSMASQ_DIR" up -d
+    docker compose --project-directory "$TRAEFIK_DIR" up -d
+    docker compose --project-directory "$PLATAFORMA_DIR" up -d
+  fi
 }
 
 main $@
