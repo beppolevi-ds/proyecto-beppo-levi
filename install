@@ -46,6 +46,9 @@ install_plataforma() {
   if [[ ! -d "$PLATAFORMA_DIR/db-data" ]]; then
       mkdir -p "$PLATAFORMA_DIR/db-data"
   fi
+
+  echo "Creando imagen de mooodle"
+  docker compose --project-directory "$PLATAFORMA_DIR/plataforma-instituto" build &>/dev/null
 }
 
 main() {
