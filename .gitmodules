@@ -1,3 +1,6 @@
 [submodule "plataforma-instituto"]
 	path = plataforma-instituto
 	url = https://github.com/beppolevi-ds/plataforma-instituto.git
+[submodule "servidor-base"]
+	path = servidor-base
+	url = https://github.com/beppolevi-ds/servidor-base.git
