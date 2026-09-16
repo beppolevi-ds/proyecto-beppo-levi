@@ -46,9 +46,6 @@ install_plataforma() {
   if [[ ! -d "$PLATAFORMA_DIR/db-data" ]]; then
       mkdir -p "$PLATAFORMA_DIR/db-data"
   fi
-
-  # inyectar archivo de configuracion con variables de entorno
-  cp "$PLATAFORMA_DIR/config.php" "$PLATAFORMA_DIR/moodle/config.php"
 }
 
 main() {
