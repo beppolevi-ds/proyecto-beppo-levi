@@ -9,7 +9,7 @@ Este documento enumera los requerimientos del servidor base. El mismo debe ser t
 # Requerimientos de software
   - Sistema Operativo: Distribución de Linux para arquitectura x86_64. Preferiblemente Ubuntu Server 25.04.
   - uidmap.
-  - *Docker* en instalado en modo rootless junto con *Docker compose*.
+  - *Docker* junto con *Docker compose*.
   - Git.
   - Un servidor de SSH para administración remota (*openssh-server* para Ubuntu Server).
   - Un firewall, preferiblemente *ufw* (uncomplicated firewall) ya que viene preinstalado con Ubuntu server.

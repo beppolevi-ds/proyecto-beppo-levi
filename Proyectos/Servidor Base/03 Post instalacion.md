@@ -2,7 +2,21 @@ Luego de instalar los servicios, para poder acceder a los mismos desde los dispo
 Dado que instalamos una versión de docker sin privilegios de usuario root, el mismo no puede acceder a puertos por debajo del 1024. Entre las posibles soluciones estan:
  - Modificar los privilegios necesarios para los puertos por debajo de 1024, pero esto puede introducir riesgos de seguridad, porque ahora cualquier programa puede habilitar estos puertos.
  - Redirigir el trafico entre puertos (port forwarding). Nuestros contenedores de Docker utilizan puertos mayores a 1024, pero desde las reglas de firewall podemos redirigir el tráfico desde un puerto protegido a este.
-# Modificación de firewall
+# Firewall
+  Para habilitar los servicios, debemos:
+  1. Permitir la conexion a los puertos:
+  ```bash
+    sudo ufw allow 53/tcp   # habilitar dnsmasq
+    sudo ufw allow 53/udp   #
+
+    sudo ufw allow 80/tcp   # habilitar http
+    sudo ufw allow 443/tcp  # habilitar https
+  ```
+  4. Habilitar ufw:
+  ```bash
+    sudo ufw enable
+## Modificación de firewall para docker rootless
+Además de habilitar los puertos anteriores, debemos:
   1. Permitir port forwarding en la configuración de ufw:
   ```
     #/etc/default/ufw
@@ -18,11 +32,19 @@ Dado que instalamos una versión de docker sin privilegios de usuario root, el m
     :PREROUNTING ACCEPT [0:0]
     -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-port puerto-de-dnsmasq
     -A PREROUTING -p udp --dport 53 -j REDIRECT --to-port puerto-de-dnsmasq
-    -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port puerto-de-traefik
-    -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port puerto-de-traefik
+    -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port puerto-http-de-traefik
+    -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port puerto-https-de-traefik
     COMMIT
   ```
-  3. Reiniciar ufw:
+  3. Habilitar puertos a redirigir:
+  ```bash
+    sudo ufw allow puerto-de-dnsmasq/tcp   # habilitar dnsmasq
+    sudo ufw allow puerto-de-dnsmasq/udp   #
+
+    sudo ufw allow puerto-http-de-traefik/tcp   # habilitar http
+    sudo ufw allow puerto-https-de-traefik/tcp  # habilitar https
+  ```
+  4. Reiniciar ufw:
   ```bash
     sudo ufw disable
     sudo ufw enable
